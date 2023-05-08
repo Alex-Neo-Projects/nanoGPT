@@ -1,5 +1,4 @@
-
-# nanoGPT
+# <strike>nanoGPT</strike> laFLAMEGPT
 
 ![nanoGPT](assets/nanogpt.jpg)
 
@@ -66,7 +65,7 @@ That I leave, to fight with over-liking
 Hasting in a roseman.
 ```
 
-lol  `¯\_(ツ)_/¯`. Not bad for a character-level model after 3 minutes of training on a GPU. Better results are quite likely obtainable by instead finetuning a pretrained GPT-2 model on this dataset (see finetuning section later).
+lol `¯\_(ツ)_/¯`. Not bad for a character-level model after 3 minutes of training on a GPU. Better results are quite likely obtainable by instead finetuning a pretrained GPT-2 model on this dataset (see finetuning section later).
 
 **I only have a macbook** (or other cheap computer). No worries, we can still train a GPT but we want to dial things down a notch. I recommend getting the bleeding edge PyTorch nightly ([select it here](https://pytorch.org/get-started/locally/) when installing) as it is currently quite likely to make your code more efficient. But even without it, a simple train run could look as follows:
 
@@ -79,6 +78,7 @@ Here, since we are running on CPU instead of GPU we must set both `--device=cpu`
 ```
 $ python sample.py --out_dir=out-shakespeare-char --device=cpu
 ```
+
 Generates samples like this:
 
 ```
@@ -91,7 +91,7 @@ No relving thee post mose the wear
 
 Not bad for ~3 minutes on a CPU, for a hint of the right character gestalt. If you're willing to wait longer, feel free to tune the hyperparameters, increase the size of the network, the context length (`--block_size`), the length of training, etc.
 
-Finally, on Apple Silicon Macbooks and with a recent PyTorch version make sure to add `--device=mps` (short for "Metal Performance Shaders"); PyTorch then uses the on-chip GPU that can *significantly* accelerate training (2-3X) and allow you to use larger networks. See [Issue 28](https://github.com/karpathy/nanoGPT/issues/28) for more.
+Finally, on Apple Silicon Macbooks and with a recent PyTorch version make sure to add `--device=mps` (short for "Metal Performance Shaders"); PyTorch then uses the on-chip GPU that can _significantly_ accelerate training (2-3X) and allow you to use larger networks. See [Issue 28](https://github.com/karpathy/nanoGPT/issues/28) for more.
 
 ## reproducing GPT-2
 
@@ -135,12 +135,12 @@ $ python train.py eval_gpt2_xl
 
 and observe the following losses on train and val:
 
-| model | params | train loss | val loss |
-| ------| ------ | ---------- | -------- |
-| gpt2 | 124M         | 3.11  | 3.12     |
-| gpt2-medium | 350M  | 2.85  | 2.84     |
-| gpt2-large | 774M   | 2.66  | 2.67     |
-| gpt2-xl | 1558M     | 2.56  | 2.54     |
+| model       | params | train loss | val loss |
+| ----------- | ------ | ---------- | -------- |
+| gpt2        | 124M   | 3.11       | 3.12     |
+| gpt2-medium | 350M   | 2.85       | 2.84     |
+| gpt2-large  | 774M   | 2.66       | 2.67     |
+| gpt2-xl     | 1558M  | 2.56       | 2.54     |
 
 However, we have to note that GPT-2 was trained on (closed, never released) WebText, while OpenWebText is just a best-effort open reproduction of this dataset. This means there is a dataset domain gap. Indeed, taking the GPT-2 (124M) checkpoint and finetuning on OWT directly for a while reaches loss down to ~2.85. This then becomes the more appropriate baseline w.r.t. reproduction.
 
